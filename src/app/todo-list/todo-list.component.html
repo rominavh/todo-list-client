@@ -1,0 +1,41 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h4>Listado de tareas</h4>
+    </div>
+    <div class="panel-body">
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Descripcion</th>
+                    <th>Estado</th>
+                    <th>Imagen</th>
+                    <th>Acciones</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let todo of todos | async">
+                    <td>{{todo.id}}</td>
+                    <td>{{todo.descripcion}}</td>
+                    <td>{{todo.estado ? "Resuelta" : "Pendiente"}}</td>
+                    <td>
+                        <div *ngIf="todo.imagen; then thenImgBlock else elseImgBlock"></div>
+                        <ng-template #thenImgBlock><img src="data:image/jpeg;base64,{{todo.imagen}}" id="imagen" />
+                        </ng-template>
+                        <ng-template #elseImgBlock><label>[Sin imagen]</label>
+                        </ng-template>
+
+                    <td>
+                        <div *ngIf="todo.estado; then thenBlock else elseBlock"></div>
+                        <ng-template #thenBlock><img src="assets/img/done.png" width="50" height="50" alt="Done!">
+                        </ng-template>
+                        <ng-template #elseBlock><button class="btn btn-success"
+                                (click)="updateEstadoTodo(todo.id)">Resuelta</button>
+                        </ng-template>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

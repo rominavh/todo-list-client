@@ -1,0 +1,68 @@
+<h4>Buscar Tareas</h4>
+<div [hidden]="submitted" style="width: 400px;">
+    <form (ngSubmit)="searchData()">
+        <div class="form-group">
+            <label for="id">Id</label>
+            <input type="text" class="form-control" id="id" required [(ngModel)]="todo.id" name="id">
+        </div>
+        <div class="form-group">
+            <label for="name">Descripcion</label>
+            <input type="text" class="form-control" id="descripcion" required [(ngModel)]="todo.descripcion"
+                name="descrpcion">
+        </div>
+
+        <div class="form-group">
+            <label for="name">Estado</label>
+            <div class="custom-control custom-radio">
+                <input id="todas" type="radio" class="custom-control-input" value="" [(ngModel)]="todo.estado"
+                    name="estado" ngModel>
+                <label class="custom-control-label" for="todas">Todos</label>
+            </div>
+            <div class="custom-control custom-radio">
+                <input id="resuelta" type="radio" class="custom-control-input" value="true" [(ngModel)]="todo.estado"
+                    name="estado" ngModel>
+                <label class="custom-control-label" for="resuelta">Resuelta</label>
+            </div>
+            <div class="custom-control custom-radio">
+                <input id="pendiente" type="radio" class="custom-control-input" value="false" [(ngModel)]="todo.estado"
+                    name="estado" ngModel>
+                <label class="custom-control-label" for="pendiente">Pendiente</label>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-success">Buscar</button>
+    </form>
+</div>
+
+<hr>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h4>Resultado</h4>
+    </div>
+    <div class="panel-body">
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Descripcion</th>
+                    <th>Estado</th>
+                    <th>Imagen</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let todo of todos | async">
+                    <td>{{todo.id}}</td>
+                    <td>{{todo.descripcion}}</td>
+                    <td>{{todo.estado ? "Resuelta" : "Pendiente"}}</td>
+                    <td>
+                        <div *ngIf="todo.imagen; then thenImgBlock else elseImgBlock"></div>
+                        <ng-template #thenImgBlock><img src="data:image/jpeg;base64,{{todo.imagen}}" id="imagen" />
+                        </ng-template>
+                        <ng-template #elseImgBlock><label>[Sin imagen]</label>
+                        </ng-template>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

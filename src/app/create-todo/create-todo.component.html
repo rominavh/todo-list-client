@@ -1,0 +1,25 @@
+<h4>Agregar Tarea</h4>
+<div [hidden]="submitted" style="width: 400px;">
+    <form name="form" (ngSubmit)=" f.form.valid && onSubmit()" #f="ngForm" novalidate>
+
+        <div class="form-group">
+            <label>Descripción</label>
+            <input type="text" name="descripcion" class="form-control" [(ngModel)]="todo.descripcion"
+                #descripcion="ngModel" [ngClass]="{ 'is-invalid': f.submitted && descripcion.invalid }" required>
+            <div *ngIf="f.submitted && descripcion.invalid" class="invalid-feedback">
+                <div *ngIf="descripcion.errors.required">Debe ingresar una descripción.</div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <input type="file" name="imagen" accept="image/*" id="imagen" (change)="selectFile($event)" />
+        </div>
+
+        <button type="submit" class="btn btn-success">Guardar</button>
+    </form>
+</div>
+
+<div [hidden]="!submitted">
+    <h5>Se ha agragado la tarea correctamente!</h5>
+    <button class="btn btn-success" (click)="newTodo()">Nueva tarea</button>
+</div>
